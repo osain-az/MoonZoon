@@ -78,6 +78,10 @@ pub fn page() -> impl Element {
         .s(Spacing::new(20))
         .item(greeting())
         .item(switch_frequency_link())
+        .s(Spacing::new(44))
+        .item(
+            Column::new().item(send_item_button() )
+        )
 }
 
 fn greeting() -> impl Element {
@@ -98,4 +102,17 @@ fn switch_frequency_link() -> impl Element {
             frequency_for_link().map(|frequency| format!("Switch to {}", frequency.as_str())),
         )
         .to_signal(frequency_for_link().map(|frequency| Route::Report { frequency }))
+}
+
+
+//-----testing button---
+
+fn send_item_button() -> impl Element {
+    let (hovered, hovered_signal) = Mutable::new_and_signal(false);
+    Button::new()
+        .s(Background::new().color_signal(hovered_signal.map_bool(|| GREEN_7, || GREEN_8)))
+        .s(Padding::all(7))
+        .on_hovered_change(move |is_hovered| hovered.set(is_hovered))
+        .label("send item")
+        .on_press(crate::app::send_item_to_backend)
 }

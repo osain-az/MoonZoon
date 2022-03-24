@@ -92,6 +92,10 @@ fn result() -> impl Element {
         .s(Spacing::new(15))
         .item(El::new().child("Result:"))
         .item_signal(result_signal())
+        .s(Spacing::new(40))
+        .item(
+            Column::new().item(send_item_button() )
+        )
 }
 
 fn expressions() -> impl Element {
@@ -107,4 +111,14 @@ fn expression_link(expression: Expression) -> impl Element {
         .s(Font::new().color(BLUE_4))
         .label(expression.to_string())
         .to(expression.into_route())
+}
+
+fn send_item_button() -> impl Element {
+    let (hovered, hovered_signal) = Mutable::new_and_signal(false);
+    Button::new()
+        .s(Background::new().color_signal(hovered_signal.map_bool(|| GREEN_7, || GREEN_8)))
+        .s(Padding::all(7))
+        .on_hovered_change(move |is_hovered| hovered.set(is_hovered))
+        .label("send item")
+        .on_press(crate::app::send_item_to_backend)
 }

@@ -8,3 +8,12 @@ categories = ["MoonZoon", "example"]
 license = "MIT"
 readme = "../README.md"
 edition = "2021"
+
+
+[dependencies]
+moonlight = { git = "https://github.com/MoonZoon/MoonZoon", rev = "13353dae4aefba77b03bafbf311622f97cf1d5c8" }
+# moonlight = { path = "../../MoonZoon/crates/moonlight" }
+
+[features]
+frontend = ["moonlight/frontend"]
+backend = ["moonlight/backend"]

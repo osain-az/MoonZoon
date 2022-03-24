@@ -1,7 +1,7 @@
 use moon::*;
-
+use shared::UpMsg;
 async fn frontend() -> Frontend {
-    Frontend::new().title("Pages example").append_to_head(
+    Frontend::new().title("Pages  example").append_to_head(
         "
         <style>
             html {
@@ -12,7 +12,9 @@ async fn frontend() -> Frontend {
     )
 }
 
-async fn up_msg_handler(_: UpMsgRequest<()>) {}
+pub async fn up_msg_handler(req: UpMsgRequest<UpMsg>) {
+  eprintln!(" Msg request {:?}", req.up_msg);
+}
 
 #[moon::main]
 async fn main() -> std::io::Result<()> {
